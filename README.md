@@ -23,3 +23,9 @@
 - `allocate` : This function allocates memory to a new object in our memory pool, this used a technique called **placement new**, which passe a pointer to the new operator, which tells it to construct the object and start it on the given pointer's address. This bypasses the OS.
 
 - `deallocate` : Simply marks the index at which the passed element is as free in the memory pool storage, it will already get over-written using the allocate method when we will need to allocate an object.
+
+#### Lock Free Queue -
+
+- A lock free queue (LFQ) is a data structure used to access data in an environment where multiple threads may be accessing the same data at the same time. Generally, to ensure data consistency across threads, we use locks and mutexes on queue data structure, but locks and mutexes are ineffecient, leading to context switches, therefore we use lock free queues, custom data structures to ensure thread safety without the use of locks.
+
+- Why Queue and not any other data structure? because the data we are going to store in the queue must be processed chronologically, so the writer thread (eg. Network thread) is always pointing to the end of the queue and the reader thread (eg. Strategy thread) is always pointing at the start of the queue
