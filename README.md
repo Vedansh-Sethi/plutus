@@ -29,3 +29,9 @@
 - A lock free queue (LFQ) is a data structure used to access data in an environment where multiple threads may be accessing the same data at the same time. Generally, to ensure data consistency across threads, we use locks and mutexes on queue data structure, but locks and mutexes are ineffecient, leading to context switches, therefore we use lock free queues, custom data structures to ensure thread safety without the use of locks.
 
 - Why Queue and not any other data structure? because the data we are going to store in the queue must be processed chronologically, so the writer thread (eg. Network thread) is always pointing to the end of the queue and the reader thread (eg. Strategy thread) is always pointing at the start of the queue
+
+#### Logger -
+
+- A logging system is necessary to track events happening in the program, writing to a log file is slow as it deals directly with the disk I/O, so we create a separate thread that will log events happening in our program.
+
+- All the other threads will write to the LFQ of logging thread and the logging thread will read the data and do the work of disk I/O, this will cause some delay in logging but is necessary for avoiding interruptions to the hot path.
