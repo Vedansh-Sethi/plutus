@@ -15,7 +15,7 @@ template <typename T> class LFQueue final
     std::atomic<size_t> num_elems_ = 0;
 
   public:
-    LFQueue(size_t num_elems) : lfq_store_(std::vector<T>(num_elems, T())) {}
+    explicit LFQueue(size_t num_elems) : lfq_store_(std::vector<T>(num_elems, T())) {}
 
     LFQueue() = delete;
     LFQueue(const LFQueue &) = delete;
@@ -23,7 +23,7 @@ template <typename T> class LFQueue final
     LFQueue &operator=(const LFQueue &) = delete;
     LFQueue &operator=(const LFQueue &&) = delete;
 
-    auto getNextToWrite() noexcept { return lfq_store_[next_write_idx_]; }
+    auto getNextToWrite() noexcept { return &lfq_store_[next_write_idx_]; }
     auto updateWriteIdx() noexcept
     {
         next_write_idx_ = (next_write_idx_ + 1) % lfq_store_.size();
